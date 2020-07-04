@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:visibility="visible"
+    android:weightSum="100"
+    tools:context=".Main_fragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="210dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:visibility="visible"
+        app:contentInsetLeft="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.github.florent37.shapeofview.shapes.RoundRectView
+                android:id="@+id/shape"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/colorPrimaryDark"
+                android:elevation="4dp"
+                app:shape_roundRect_bottomLeftRadius="10dp"
+                app:shape_roundRect_bottomRightRadius="10dp"
+                app:shape_roundRect_topLeftRadius="10dp"
+                app:shape_roundRect_topRightRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/dark_2"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="5"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/app_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:letterSpacing="0.2"
+                                android:lineSpacingMultiplier="1.5"
+                                android:minLines="2"
+                                android:paddingBottom="45dp"
+                                android:text="@string/app_name"
+                                android:textColor="#FFF"
+                                android:textScaleX="1"
+                                android:textSize="30sp"
+                                app:autoSizeTextType="none">
+
+                            </TextView>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="1dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="6">
+
+                        <Button
+                            android:id="@+id/button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/dark_2"
+                            android:drawableRight="@drawable/down_arrow"
+                            android:text="Жанр"
+                            android:textColor="#FFFFFF"
+                            style="?android:attr/borderlessButtonStyle"  />
+
+                        <Button
+                            android:id="@+id/button2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:background="@color/dark_2"
+                            android:drawableRight="@drawable/down_arrow"
+                            android:text="По времени    "
+                            android:textColor="#FFFFFF"
+                            style="?android:attr/borderlessButtonStyle" />
+
+                        <Button
+                            android:id="@+id/button3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:background="@color/dark_2"
+                            android:drawableRight="@drawable/down_arrow"
+                            android:text="Оценка  "
+                            android:textColor="#FFFFFF"
+                            style="?android:attr/borderlessButtonStyle"  />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </com.github.florent37.shapeofview.shapes.RoundRectView>
+        </LinearLayout>
+    </Toolbar>
+
+
+</RelativeLayout>

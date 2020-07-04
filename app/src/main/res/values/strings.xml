@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Sinema App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_menu">Главная</string>
+    <string name="main_search">Поиск</string>
+    <string name="main_rec">Подборка</string>
+</resources>

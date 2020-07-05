@@ -22,6 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class Main_fragment extends Fragment implements View.OnClickListener {
+    private static String YouTube_Api = "AIzaSyB2P4Q7d234l-EI_oO6dAi-BlbMpuOg0CE";
+    private String Channel_id = "UCOD2veMoMj5jy6K0pGt55Bw";
+    private String Channel_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&channelId="+Channel_id+"&maxResults=20&key="+YouTube_Api+"";
     Toolbar toolbar;
     ArrayList<Film> list = new ArrayList<Film>();
     RecyclerView recyclerView;
@@ -34,14 +37,8 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
         wrapper = new ContextThemeWrapper(inflater.getContext(),R.style.PopurMenuDark);
         recyclerView = view.findViewById(R.id.recycler);
         toolbar = view.findViewById(R.id.toolbar);
-        list.add(new Film("Урок по чему-то","12.04.20","null","img","25:00","Видео",5.6f));
-        list.add(new Film("Как и зачем","12.04.20","null","img","10:00","Видео",7.4f));
-        list.add(new Film("Существует ли ?","12.04.20","null","img","8:50","Видео",4.6f));
-        list.add(new Film("Как быть с этим","12.04.20","null","img","14:03","Видео",9.6f));
-        list.add(new Film("Подкаст","12.04.20","null","img","45:56","Видео",8.8f));
-        list.add(new Film("Фильм","12.04.20","null","img","1:05:46","Фильм",8.4f));
-        list.add(new Film("Строим дом","12.04.20","null","img","4:13","Видео",1.6f));
         initRecyclerView();
+        listInit();
         button_date = view.findViewById(R.id.button_date);
         button_tag = view.findViewById(R.id.button_tag);
         button_stars = view.findViewById(R.id.button_stars);
@@ -123,6 +120,10 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
             }
         });
         popupMenu.show();
+    }
+    private void listInit (){
+        YouTubeApiConnect youTubeApiConnect = new YouTubeApiConnect(Channel_url,list,recyclerView);
+        youTubeApiConnect.execute();
     }
     private void activButton (Button activ){
         switch (activ.getId()){

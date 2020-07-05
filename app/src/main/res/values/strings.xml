@@ -13,6 +13,6 @@
     <string name="str_tag_video">Видео</string>
     <string name="str_stars_good">От лучшего</string>
     <string name="str_stars_bad">От худшего</string>
-    <string name="str_date_new">Новые</string>
-    <string name="str_date_old">Старые</string>
+    <string name="str_date_new">Длинее</string>
+    <string name="str_date_old">Короче</string>
 </resources>

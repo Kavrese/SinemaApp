@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmViewHolder> {
@@ -40,6 +42,11 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
         holder.name.setText(list.get(position).getName());
         holder.time_long.setText(list.get(position).getTime_long());
         holder.tag.setText(list.get(position).getTag());
+        Picasso.get()
+                .load(list.get(position).getImg())
+                .placeholder(android.R.drawable.ic_popup_sync)
+                .error(android.R.drawable.ic_menu_close_clear_cancel)
+                .into(holder.img);
         float star = list.get(position).getStar();
         if(star <= 3.9f)
             holder.star.setBackgroundColor(holder.img.getContext().getColor(R.color.red));

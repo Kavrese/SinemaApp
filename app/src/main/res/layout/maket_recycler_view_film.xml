@@ -17,11 +17,10 @@
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:scaleType="centerCrop"
-            app:srcCompat="@android:drawable/title_bar" />
+            app:srcCompat="@android:drawable/ic_popup_sync" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +34,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="3dp"
                 android:layout_marginBottom="3dp"
-                android:autoText="false"
                 android:background="@drawable/date_created_maket"
                 android:paddingLeft="4dp"
                 android:paddingTop="2dp"
@@ -58,6 +56,7 @@
         android:weightSum="4">
 
         <TextView
+            android:ellipsize="end"
             android:id="@+id/name_film"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -66,7 +65,7 @@
             android:maxLines="2"
             android:text="Фильм"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:autoSizeTextType="none" />
 
         <LinearLayout

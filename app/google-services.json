@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "399165709746",
+    "firebase_url": "https://sinemaapp-b5533.firebaseio.com",
+    "project_id": "sinemaapp-b5533",
+    "storage_bucket": "sinemaapp-b5533.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399165709746:android:5e0751c7b65ea9483f58ab",
+        "android_client_info": {
+          "package_name": "com.example.sinemaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399165709746-oip1h556rjpk3hs5vt67nvqa3hdtm8p0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sinemaapp",
+            "certificate_hash": "f89a90b3d5108ef23f1baed5505e185199e407f4"
+          }
+        },
+        {
+          "client_id": "399165709746-3bm1bm48ftjkrt57e5l1rpbebr7gttbb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3lHN54FTRqRcbXAFpULJVDQpX1EcUsO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399165709746-3bm1bm48ftjkrt57e5l1rpbebr7gttbb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

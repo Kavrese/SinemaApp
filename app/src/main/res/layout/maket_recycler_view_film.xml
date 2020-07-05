@@ -9,14 +9,40 @@
     android:orientation="horizontal"
     android:weightSum="10">
 
-    <ImageView
-        android:id="@+id/img"
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:layout_margin="10dp"
-        android:layout_weight="3"
-        android:scaleType="centerCrop"
-        app:srcCompat="@android:drawable/title_bar" />
+        android:layout_weight="3">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:scaleType="centerCrop"
+            app:srcCompat="@android:drawable/title_bar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|bottom"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/time_long"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/date_created_maket"
+                android:padding="4dp"
+                android:text="12:30"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -55,23 +81,17 @@
                 android:text="Tag"
                 android:textColor="#FFFFFF" />
 
-            <LinearLayout
-                android:id="@+id/stars_lin"
+            <TextView
+                android:id="@+id/text_star"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/green"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:text="8.5"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="8.5"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

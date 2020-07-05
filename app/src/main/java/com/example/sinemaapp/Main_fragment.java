@@ -28,18 +28,13 @@ public class Main_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_fragment,container,false);
         recyclerView = view.findViewById(R.id.recycler);
         toolbar = view.findViewById(R.id.toolbar);
-        list.add(new Film("test"));
-        list.add(new Film("test"));
-        list.add(new Film("test"));
-        list.add(new Film("test"));
-        list.add(new Film("test"));
-        list.add(new Film("test"));
-        list.add(new Film("test"));
-        list.add(new Film("test"));
-        list.add(new Film("test"));
-        list.add(new Film("test"));
-        list.add(new Film("test"));
-        list.add(new Film("test"));
+        list.add(new Film("Урок по чему-то","12.04.20","null","img","25:00","Видео",5.6f));
+        list.add(new Film("Как и зачем","12.04.20","null","img","10:00","Видео",7.4f));
+        list.add(new Film("Существует ли ?","12.04.20","null","img","8:50","Видео",4.6f));
+        list.add(new Film("Как быть с этим","12.04.20","null","img","14:03","Видео",9.6f));
+        list.add(new Film("Подкаст","12.04.20","null","img","45:56","Видео",8.8f));
+        list.add(new Film("Фильм","12.04.20","null","img","1:05:46","Фильм",8.4f));
+        list.add(new Film("Строим дом","12.04.20","null","img","4:13","Видео",1.6f));
         initRecyclerView();
         return view;
     }

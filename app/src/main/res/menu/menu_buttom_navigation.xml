@@ -9,4 +9,7 @@
     <item android:id="@+id/rec"
         android:title="Подборка"
         android:icon="@drawable/star_light"/>
+    <item android:id="@+id/profile"
+        android:title="@string/main_profile"
+        android:icon="@drawable/user_light"/>
 </menu>

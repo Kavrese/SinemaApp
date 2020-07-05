@@ -63,6 +63,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="5"
+                            android:gravity="center"
                             android:orientation="vertical">
 
                             <TextView
@@ -93,39 +94,45 @@
                         android:layout_marginBottom="1dp"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:weightSum="6">
+                        android:weightSum="3">
 
                         <Button
-                            android:id="@+id/button"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/button_tag"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:background="@color/dark_2"
                             android:drawableRight="@drawable/down_arrow"
-                            android:text="Жанр"
-                            android:textColor="#FFFFFF"
-                            style="?android:attr/borderlessButtonStyle"  />
+                            android:drawablePadding="8dp"
+                            android:paddingRight="5dp"
+                            android:text="@string/bt_tag"
+                            android:textColor="#FFFFFF" />
 
                         <Button
-                            android:id="@+id/button2"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/button_date"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1.1"
                             android:background="@color/dark_2"
                             android:drawableRight="@drawable/down_arrow"
-                            android:text="По времени    "
-                            android:textColor="#FFFFFF"
-                            style="?android:attr/borderlessButtonStyle" />
+                            android:drawablePadding="10dp"
+                            android:paddingLeft="5dp"
+                            android:text="@string/bt_date"
+                            android:textColor="#FFFFFF" />
 
                         <Button
-                            android:id="@+id/button3"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/button_stars"
+                            style="?android:attr/borderlessButtonStyle"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
+                            android:layout_weight="0.9"
                             android:background="@color/dark_2"
                             android:drawableRight="@drawable/down_arrow"
-                            android:text="Оценка  "
-                            android:textColor="#FFFFFF"
-                            style="?android:attr/borderlessButtonStyle"  />
+                            android:drawablePadding="5dp"
+                            android:text="@string/bt_stars"
+                            android:textColor="#FFFFFF" />
                     </LinearLayout>
                 </LinearLayout>
 

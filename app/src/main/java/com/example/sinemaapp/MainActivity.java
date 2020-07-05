@@ -47,40 +47,5 @@ BottomNavigationView bnv;
             }
         });
     }
-    private void setValue(){
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference ref = db.getReference("Users").child("idUsers");
-        ref.setValue("text"); // Value
-    }
-    private void signIn (String email,String password){
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null) {
-            Toast.makeText(this, "already signed", Toast.LENGTH_SHORT).show();
-        } else {
-            auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(MainActivity.this, "sign in", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-        }
-    }
-    private void outUser (){
-        FirebaseAuth.getInstance().signOut();
-    }
-    private void createNewUser (String email,String password){
-        FirebaseAuth.getInstance()
-                .createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, "create", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
+
 }

@@ -6,4 +6,13 @@
     <string name="main_search">Поиск</string>
     <string name="main_rec">Подборка</string>
     <string name="main_profile">Профиль</string>
+    <string name="bt_stars">Оценка</string>
+    <string name="bt_date">По времени</string>
+    <string name="bt_tag">Жанр</string>
+    <string name="str_tag_film">Фильмы</string>
+    <string name="str_tag_video">Видео</string>
+    <string name="str_stars_good">От лучшего</string>
+    <string name="str_stars_bad">От худшего</string>
+    <string name="str_date_new">Новые</string>
+    <string name="str_date_old">Старые</string>
 </resources>

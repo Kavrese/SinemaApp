@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/str_stars_good"
+        android:id="@+id/good"/>
+    <item android:title="@string/str_stars_bad"
+        android:id="@+id/bad"/>
+</menu>

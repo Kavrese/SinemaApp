@@ -40,11 +40,10 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
     @Override
     public void onBindViewHolder(@NonNull FilmViewHolder holder, int position) {
         holder.name.setText(list.get(position).getName());
-        holder.time_long.setText(list.get(position).getTime_long());
+        holder.time_long.setText(editString(list.get(position).getTime_long()));
         holder.tag.setText(list.get(position).getTag());
         Picasso.get()
                 .load(list.get(position).getImg())
-                .placeholder(android.R.drawable.ic_popup_sync)
                 .error(android.R.drawable.ic_menu_close_clear_cancel)
                 .into(holder.img);
         float star = list.get(position).getStar();
@@ -55,6 +54,36 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
         else if(star <= 10)
             holder.star.setBackgroundColor(holder.img.getContext().getColor(R.color.green));
         holder.star.setText(String.valueOf(list.get(position).getStar()));
+    }
+    private String editString(String time_long) {
+        String min,s,hour;
+        time_long.replace("PT",""); //Удаляем формат времени
+
+        if(time_long.contains("M"))
+            min = opredMinS(time_long,"M");
+        else
+            min="00";
+        if(time_long.contains("S"))
+            s = opredMinS(time_long,"S");
+        else
+            s = "0";
+        if(time_long.contains("H"))
+            hour = opredMinS(time_long,"H");
+        else
+            hour = "";
+        if(hour.equals(""))
+            return min+":"+s;
+        else
+            return hour+":"+min+":"+s;
+    }
+    private String opredMinS(String time_long,String sim){
+        String m = String.valueOf(time_long.charAt(time_long.indexOf(sim) - 1));
+        String m1 = String.valueOf(time_long.charAt(time_long.indexOf(sim) - 2));
+        if(!Character.isLetter(m1.charAt(0))){
+            return m1+m;
+        }else{
+            return "0"+m;
+        }
     }
 
     @Override

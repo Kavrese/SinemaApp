@@ -40,7 +40,7 @@ import java.util.List;
 public class Main_fragment extends Fragment implements View.OnClickListener {
     private static String YouTube_Api = "AIzaSyB2P4Q7d234l-EI_oO6dAi-BlbMpuOg0CE";
     private String Channel_id = "UCOD2veMoMj5jy6K0pGt55Bw";
-    private String Channel_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&channelId=" + Channel_id + "&maxResults=20&key=" + YouTube_Api + "";
+    private String Channel_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&channelId=" + Channel_id + "&maxResults=2&key=" + YouTube_Api + "";
     Toolbar toolbar;
     ArrayList<Film> list = new ArrayList<Film>();
     ArrayList list_video_id = new ArrayList();

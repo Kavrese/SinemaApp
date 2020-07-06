@@ -1,5 +1,6 @@
 package com.example.sinemaapp;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,17 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FilmViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final FilmViewHolder holder, final int position) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(),PageFilm.class);
+                intent.putExtra("img",list.get(position).getImg());
+                intent.putExtra("des",list.get(position).getDes());
+                intent.putExtra("name",list.get(position).getName());
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
         holder.name.setText(list.get(position).getName());
         holder.time_long.setText(editString(list.get(position).getTime_long()));
         holder.tag.setText(list.get(position).getTag());

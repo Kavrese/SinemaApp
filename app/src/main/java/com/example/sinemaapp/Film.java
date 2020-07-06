@@ -24,7 +24,10 @@ public class Film {
         return time_long;
     }
     public String getTag() {
-        return tag;
+        if(tag != null)
+            return tag;
+        else
+            return "";
     }
     public String getDate_create() {
         return date_create;

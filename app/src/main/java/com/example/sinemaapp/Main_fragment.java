@@ -42,6 +42,7 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
     private String Channel_id = "UCOD2veMoMj5jy6K0pGt55Bw";
     private String Channel_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&channelId=" + Channel_id + "&maxResults=2&key=" + YouTube_Api + "";
     Toolbar toolbar;
+    ArrayList<Video> list_video = new ArrayList<>();
     ArrayList<Film> list = new ArrayList<Film>();
     ArrayList list_video_id = new ArrayList();
     RecyclerView recyclerView;
@@ -57,6 +58,8 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
         toolbar = view.findViewById(R.id.toolbar);
         initRecyclerView();
         listInit();
+        FireBaseConnect fireBaseConnect = new FireBaseConnect();
+        fireBaseConnect.setNewUser(new User("icon2","email@gmail.com","123456789",false,1,"name"));
         button_date = view.findViewById(R.id.button_date);
         button_tag = view.findViewById(R.id.button_tag);
         button_stars = view.findViewById(R.id.button_stars);
@@ -144,8 +147,6 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
 
     private void listInit() {
         new YouTubeApiConnect(Channel_url, "list videos").execute();
-        for(int i = 0;i<list_video_id.size();i++)
-            new YouTubeApiConnect("https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id="+list_video_id.get(i).toString()+"&key="+YouTube_Api+"","statics_list").execute();
     }
     private void setList (ArrayList<Film> list){
         this.list = list;
@@ -211,22 +212,25 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                     }
                 }
             }
+            //Запуск запросов на сбор статистики
             for(int i = 0;i<list_video_id.size();i++)
                 new YouTubeApiConnect("https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id="+list_video_id.get(i).toString()+"&key="+YouTube_Api+"","statics_list").execute();
         }
         private void parseVideoStatics(JSONObject jsonObject) throws JSONException {
             if(type.equals("statics_list")) {
-                String title = "error", des = "error", created_date = "null", img = null, tag = "error",long_time = "null";
+                String title = "error", des = "error", created_date = "null", img = null, tag = "error",long_time = "null",video_id = "null",name_channel = "null";
                 final float stars;
                 if (jsonObject.has("items")) {
                     JSONArray jsonArray = jsonObject.getJSONArray("items");
                     JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                    video_id = jsonObject1.getString("id");
                     //Берём основные данные
                     if (jsonObject1.has("snippet")) {
                         JSONObject jsonObjectSnippet = jsonObject1.getJSONObject("snippet");
                         title = jsonObjectSnippet.getString("title");
                         des = jsonObjectSnippet.getString("description");
                         created_date = jsonObjectSnippet.getString("publishedAt");
+                        name_channel = jsonObjectSnippet.getString("channelTitle");
                         //Дальше берём превью
                         if (jsonObjectSnippet.has("thumbnails")) {
                             JSONObject jsonObject_thumbnails = jsonObjectSnippet.getJSONObject("thumbnails");
@@ -241,6 +245,7 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                             tag = JSONArrayTag.getString(0);
                         }
                     }
+                    //Берём продолжительность
                     if(jsonObject1.has("contentDetails")){
                         JSONObject jsonObject_Details = jsonObject1.getJSONObject("contentDetails");
                         long_time = jsonObject_Details.getString("duration");
@@ -253,6 +258,8 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                         float fl = like * 100 / (like + dislike);     //Соотношений лайков к общей сумме оценок
                         stars = fl * 10 / 100;
                         list.add(new Film(title, created_date, des, img, long_time, tag, stars));
+                        FireBaseConnect fireBaseConnect = new FireBaseConnect();
+                        fireBaseConnect.setNewVideo(new Video(name_channel,des,title,tag,String.valueOf(like),String.valueOf(dislike),video_id));
                         setList(list);
                     }
                 }

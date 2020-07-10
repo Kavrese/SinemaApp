@@ -47,6 +47,7 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
                 intent.putExtra("img",list.get(position).getImg());
                 intent.putExtra("des",list.get(position).getDes());
                 intent.putExtra("name",list.get(position).getName());
+                intent.putExtra("id_video",list.get(position).getId_video());
                 holder.itemView.getContext().startActivity(intent);
             }
         });

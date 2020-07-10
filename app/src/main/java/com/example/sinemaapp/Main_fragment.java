@@ -21,6 +21,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.youtube.player.YouTubePlayerView;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.JsonObject;
 
 import org.apache.http.HttpEntity;
@@ -39,16 +47,14 @@ import java.util.List;
 
 public class Main_fragment extends Fragment implements View.OnClickListener {
     private static String YouTube_Api = "AIzaSyB2P4Q7d234l-EI_oO6dAi-BlbMpuOg0CE";
-    private String Channel_id = "UCOD2veMoMj5jy6K0pGt55Bw";
-    private String Channel_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&channelId=" + Channel_id + "&maxResults=2&key=" + YouTube_Api + "";
+    private String Channel_id = "UCoAEj6XaIzqxQ5C5OUIGcZA";
+    private String Channel_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&channelId=" + Channel_id + "&maxResults=20&key=" + YouTube_Api + "";
     Toolbar toolbar;
-    ArrayList<Video> list_video = new ArrayList<>();
     ArrayList<Film> list = new ArrayList<Film>();
     ArrayList list_video_id = new ArrayList();
     RecyclerView recyclerView;
     Context wrapper;
     Button button_tag, button_stars, button_date;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -146,7 +152,36 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
     }
 
     private void listInit() {
+        final ArrayList<String> id_video = new ArrayList<>();
+        final String channel = "FILMSTER";
+        final DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("download_video").child("items").child(channel);
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("download_video").child("items");
         new YouTubeApiConnect(Channel_url, "list videos").execute();
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
     private void setList (ArrayList<Film> list){
         this.list = list;
@@ -199,6 +234,14 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
             }
         }
         private void parseVideo(JSONObject jsonObject) throws JSONException {
+            //Берём maxResult
+            if(jsonObject.has("pageInfo")){
+                JSONObject jsonObjectPageIndo = jsonObject.getJSONObject("pageInfo");
+                int maxResultNow = jsonObjectPageIndo.getInt("totalResults");
+                FireBaseConnect fireBaseConnect = new FireBaseConnect();
+                fireBaseConnect.setMaxResult(maxResultNow);
+            }
+            //Берём video id
             if (jsonObject.has("items")) {
                 JSONArray jsonArray = jsonObject.getJSONArray("items");
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -257,9 +300,9 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                         int dislike = jsonObject_statistics.getInt("dislikeCount");
                         float fl = like * 100 / (like + dislike);     //Соотношений лайков к общей сумме оценок
                         stars = fl * 10 / 100;
-                        list.add(new Film(title, created_date, des, img, long_time, tag, stars));
+                        list.add(new Film(title, created_date, des, img, long_time, tag, stars,video_id));
                         FireBaseConnect fireBaseConnect = new FireBaseConnect();
-                        fireBaseConnect.setNewVideo(new Video(name_channel,des,title,tag,String.valueOf(like),String.valueOf(dislike),video_id));
+                        fireBaseConnect.setNewVideo(new Video(name_channel,des,title,tag,String.valueOf(like),String.valueOf(dislike),video_id,created_date,img,long_time));
                         setList(list);
                     }
                 }

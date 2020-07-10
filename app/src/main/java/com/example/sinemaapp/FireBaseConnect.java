@@ -1,6 +1,7 @@
 package com.example.sinemaapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,54 +16,48 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FireBaseConnect {
     FirebaseDatabase db = FirebaseDatabase.getInstance();
+    int count_video;
+    int no;
+    int maxResultNow;
+    ArrayList<Film> list = new ArrayList<>();
+    public FireBaseConnect(){}
+    public FireBaseConnect (int maxResult){
+        this.maxResultNow = maxResult;
+    }
     public void setNewUser (User user){
-        addCount("user",null,user);
+        addValue("user",null,user);
     }
 
     public void setNewVideo (Video video){
-        addCount("video",video,null);
+        addValue("video",video,null);
     }
-    private void addCount (final String type, final Video video, final User user){
+    private void addValue (final String type, final Video video, final User user){
         if(type.equals("video")){
-            DatabaseReference db_ref1 = db.getReference("download_video").child("items");
-             DatabaseReference db_ref = db.getReference("download_video").child("items").child(video.getChannel_name());
-                db_ref1.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        DatabaseReference myRef = db.getReference("download_video").child("count_download");
-                        int count = (int) snapshot.getChildrenCount();
-                        myRef.setValue(String.valueOf(count));
-                    }
+             final DatabaseReference myRef = db.getReference("download_video").child("count_download");
+             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                 @Override
+                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                     final DatabaseReference db_ref = db.getReference("download_video").child("items").child(video.getChannel_name());
+                                     db_ref.child(video.getId_video()).setValue(video, new DatabaseReference.CompletionListener() {
+                                         @Override
+                                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
 
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                         }
+                                     });
+                                 }
+                 @Override
+                 public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-             db_ref.child(video.getId_video()).setValue(video, new DatabaseReference.CompletionListener() {
-                @Override
-                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                }
-            });
+                 }
+             });
         }else{
             DatabaseReference db_ref = db.getReference("users").child("items");
             DatabaseReference db_ref1 = db.getReference("users");
@@ -101,6 +96,40 @@ public class FireBaseConnect {
                 }
             });
         }
+    }
+    public int getChildrenCountChannel (String channel){
+        DatabaseReference databaseReference = db.getReference().child("download_video").child("items").child(channel);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                count_video =(int) snapshot.getChildrenCount();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return count_video;
+    }
+    public int editMaxResult (final int maxResultOld){
+        final DatabaseReference ref = db.getReference("download_video").child("maxResult");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int maxResultNow = Integer.parseInt(snapshot.getValue().toString());
+                no = maxResultNow-maxResultOld;
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return no;
+    }
+    public void setMaxResult (int maxResult){
+        DatabaseReference ref = db.getReference("download_video").child("maxResult");
+        ref.setValue(maxResult);
     }
     public void signIn (String email, String password, final Context context){
         FirebaseAuth auth = FirebaseAuth.getInstance();

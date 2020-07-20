@@ -1,12 +1,14 @@
-package com.example.sinemaapp;
+package com.example.sinemaapp.classes;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.sinemaapp.model.Film;
+import com.example.sinemaapp.model.User;
+import com.example.sinemaapp.model.Video;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -16,16 +18,21 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FireBaseConnect {
     FirebaseDatabase db = FirebaseDatabase.getInstance();
     int count_video;
     int no;
+    JSONArray jsonArray;
+    Film film;
     int maxResultNow;
     ArrayList<Film> list = new ArrayList<>();
     public FireBaseConnect(){}
@@ -41,23 +48,40 @@ public class FireBaseConnect {
     }
     private void addValue (final String type, final Video video, final User user){
         if(type.equals("video")){
-             final DatabaseReference myRef = db.getReference("download_video").child("count_download");
-             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+             final DatabaseReference myRef = db.getReference("download_video").child(video.getChannel_name()).child("count_video");
+             final DatabaseReference db_ref = db.getReference("download_video").child(video.getChannel_name()).child("items");
+            db_ref.addChildEventListener(new ChildEventListener() {
                  @Override
-                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                     final DatabaseReference db_ref = db.getReference("download_video").child("items").child(video.getChannel_name());
-                                     db_ref.child(video.getId_video()).setValue(video, new DatabaseReference.CompletionListener() {
-                                         @Override
-                                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                     myRef.setValue((int )snapshot.getChildrenCount());
+                 }
 
-                                         }
-                                     });
-                                 }
+                 @Override
+                 public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                 }
+
+                 @Override
+                 public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                 }
+
+                 @Override
+                 public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                 }
+
                  @Override
                  public void onCancelled(@NonNull DatabaseError error) {
 
                  }
              });
+            db_ref.child(video.getId_video()).setValue(video, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+
+                }
+            });
         }else{
             DatabaseReference db_ref = db.getReference("users").child("items");
             DatabaseReference db_ref1 = db.getReference("users");
@@ -98,7 +122,7 @@ public class FireBaseConnect {
         }
     }
     public int getChildrenCountChannel (String channel){
-        DatabaseReference databaseReference = db.getReference().child("download_video").child("items").child(channel);
+        DatabaseReference databaseReference = db.getReference().child("download_video").child(channel).child("items");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -127,9 +151,46 @@ public class FireBaseConnect {
         });
         return no;
     }
-    public void setMaxResult (int maxResult){
-        DatabaseReference ref = db.getReference("download_video").child("maxResult");
+    public void setMaxResult (int maxResult,String channel){
+        DatabaseReference ref = db.getReference("download_video").child(channel).child("maxResult");
         ref.setValue(maxResult);
+    }
+    public Film getVideoBD (String id_video){
+        DatabaseReference databaseReference = db.getReference().child("download_video").child("Chuck Review").child("items").child(id_video);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                film = snapshot.getValue(Film.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return film;
+    }
+    public JSONArray getObjectNameItems(){
+        DatabaseReference databaseReference = db.getReference().child("download_video").child("Chuck Review").child("items");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Object object = snapshot.getValue();
+                String json = new Gson().toJson(object);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                     jsonArray = jsonObject.names();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return jsonArray;
     }
     public void signIn (String email, String password, final Context context){
         FirebaseAuth auth = FirebaseAuth.getInstance();

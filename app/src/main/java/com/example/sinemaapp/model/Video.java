@@ -1,4 +1,4 @@
-package com.example.sinemaapp;
+package com.example.sinemaapp.model;
 
 import java.util.ArrayList;
 

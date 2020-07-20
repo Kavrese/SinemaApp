@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:visibility="visible"
     android:weightSum="100"
-    tools:context=".Main_fragment">
+    tools:context=".fragments.Main_fragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"

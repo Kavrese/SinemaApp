@@ -1,4 +1,4 @@
-package com.example.sinemaapp;
+package com.example.sinemaapp.adapter;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,13 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sinemaapp.classes.PageFilm;
+import com.example.sinemaapp.R;
+import com.example.sinemaapp.model.Film;
+import com.example.sinemaapp.model.VideoApi;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmViewHolder> {
-    ArrayList<Film> list;
-    public MainFilmAdapter(ArrayList<Film> list){
+    ArrayList<VideoApi> list;
+    public MainFilmAdapter(ArrayList<VideoApi> list){
         this.list = list;
     }
     public class FilmViewHolder extends RecyclerView.ViewHolder {
@@ -40,34 +44,18 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
 
     @Override
     public void onBindViewHolder(@NonNull final FilmViewHolder holder, final int position) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(holder.itemView.getContext(),PageFilm.class);
-                intent.putExtra("img",list.get(position).getImg());
-                intent.putExtra("des",list.get(position).getDes());
-                intent.putExtra("name",list.get(position).getName());
-                intent.putExtra("id_video",list.get(position).getId_video());
-                holder.itemView.getContext().startActivity(intent);
-            }
-        });
-        holder.name.setText(list.get(position).getName());
-        holder.time_long.setText(editString(list.get(position).getTime_long()));
-        holder.tag.setText(list.get(position).getTag());
+        VideoApi videoApi = list.get(position);
+
+        String getTitle = videoApi.getSnippet().getTitle();
+        String getTimeAdd = videoApi.getSnippet().getPublishedAt();
+        String urlImg = videoApi.getSnippet().getThumbnails().getHigh().getUrl();
+        holder.name.setText(getTitle);
         Picasso.get()
-                .load(list.get(position).getImg())
-                .error(android.R.drawable.ic_menu_close_clear_cancel)
+                .load(urlImg)
+                .error(android.R.drawable.stat_notify_error)
                 .into(holder.img);
-        float star = list.get(position).getStar();
-        if(star <= 3.9f)
-            holder.star.setBackgroundColor(holder.img.getContext().getColor(R.color.red));
-        else if(star <= 6.9)
-            holder.star.setBackgroundColor(holder.img.getContext().getColor(R.color.yellow));
-        else if(star <= 10)
-            holder.star.setBackgroundColor(holder.img.getContext().getColor(R.color.green));
-        holder.star.setText(String.valueOf(list.get(position).getStar()));
     }
-    private String editString(String time_long) {
+    private String editStringTimeLong(String time_long) {
         String min,s,hour;
         time_long.replace("PT",""); //Удаляем формат времени
 

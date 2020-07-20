@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/video_tag"
-        android:title="@string/str_tag_video"/>
-    <item android:id="@+id/film_tag"
-        android:title="@string/str_tag_film"/>
+    <item android:id="@+id/tag_chuck_review"
+        android:title="@string/str_tag_chuck_review"/>
+    <item android:id="@+id/tag_bad_comedian"
+        android:title="@string/str_tag_bad_comedian"/>
+    <item android:id="@+id/mos_film"
+        android:title="@string/str_tag_mos_film"/>
+    <item android:id="@+id/set_more"
+        android:title="@string/str_tag_set_more"/>
 </menu>

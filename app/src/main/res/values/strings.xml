@@ -8,9 +8,11 @@
     <string name="main_profile">Профиль</string>
     <string name="bt_stars">Оценка</string>
     <string name="bt_date">По времени</string>
-    <string name="bt_tag">Жанр</string>
-    <string name="str_tag_film">Фильмы</string>
-    <string name="str_tag_video">Видео</string>
+    <string name="bt_tag">Канал</string>
+    <string name="str_tag_chuck_review">Chuck Review</string>
+    <string name="str_tag_bad_comedian">Bad Comedian</string>
+    <string name="str_tag_mos_film">Мосфильм</string>
+    <string name="str_tag_set_more">Добавить свой</string>
     <string name="str_stars_good">От лучшего</string>
     <string name="str_stars_bad">От худшего</string>
     <string name="str_date_new">Длинее</string>

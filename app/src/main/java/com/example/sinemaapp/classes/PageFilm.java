@@ -1,4 +1,4 @@
-package com.example.sinemaapp;
+package com.example.sinemaapp.classes;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sinemaapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;

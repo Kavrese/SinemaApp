@@ -1,4 +1,4 @@
-package com.example.sinemaapp;
+package com.example.sinemaapp.classes;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

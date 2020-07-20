@@ -1,4 +1,4 @@
-package com.example.sinemaapp;
+package com.example.sinemaapp.model;
 
 public class User {
     public String avatar_icon;

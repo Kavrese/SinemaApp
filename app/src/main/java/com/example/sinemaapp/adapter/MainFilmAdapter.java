@@ -6,22 +6,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sinemaapp.classes.PageFilm;
 import com.example.sinemaapp.R;
+import com.example.sinemaapp.classes.YouTubeApi;
 import com.example.sinemaapp.model.Film;
+import com.example.sinemaapp.model.FullinfoVideo;
+import com.example.sinemaapp.model.ModelMain;
 import com.example.sinemaapp.model.VideoApi;
+import com.example.sinemaapp.model.VideoApiFull;
+import com.squareup.picasso.Cache;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmViewHolder> {
     ArrayList<VideoApi> list;
-    public MainFilmAdapter(ArrayList<VideoApi> list){
+    private String base_url = "https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics";
+    private String video_id_url = "&id=";
+    private String api_url = "&key=";
+
+    public MainFilmAdapter(ArrayList<VideoApi> list,String api_url){
         this.list = list;
+        this.api_url = this.api_url + api_url;
     }
     public class FilmViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
@@ -45,15 +60,44 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
     @Override
     public void onBindViewHolder(@NonNull final FilmViewHolder holder, final int position) {
         VideoApi videoApi = list.get(position);
-
         String getTitle = videoApi.getSnippet().getTitle();
-        String getTimeAdd = videoApi.getSnippet().getPublishedAt();
         String urlImg = videoApi.getSnippet().getThumbnails().getHigh().getUrl();
         holder.name.setText(getTitle);
         Picasso.get()
                 .load(urlImg)
                 .error(android.R.drawable.stat_notify_error)
                 .into(holder.img);
+        String url = base_url+video_id_url+ list.get(position).getId().getVideoId()+api_url;
+        Call<FullinfoVideo> date = YouTubeApi.getVideo().getInfoVideo(base_url+video_id_url+ list.get(position).getId().getVideoId()+api_url);
+        date.enqueue(new Callback<FullinfoVideo>() {
+            @Override
+            public void onResponse(Call<FullinfoVideo> call, Response<FullinfoVideo> response) {
+                if(response.errorBody() != null){
+                    Toast.makeText(holder.img.getContext(),"Error Call<FullinfoVideo>: "+ response.errorBody().toString()+" is in onResponse", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(holder.img.getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                }else{
+                    FullinfoVideo fullinfoVideo = response.body();
+                    VideoApiFull videoApiFull = fullinfoVideo.getItems().get(0);
+                    String description = videoApiFull.getSnippetApi().getDescription();
+                    String timeLong = videoApiFull.getContentDetails().getDuration();
+                    String like = videoApiFull.getStatisticsVideo().getLikeCount();
+                    String dislike = videoApiFull.getStatisticsVideo().getDislikeCount();
+
+                    holder.time_long.setText(editStringTimeLong(timeLong));
+                    holder.star.setText(editStar(like,dislike));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FullinfoVideo> call, Throwable t) {
+                Toast.makeText(holder.img.getContext(),"Error Call<FullinfoVideo>: "+t.getMessage()+" is in onFailure", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private String editStar (String like,String dislike){
+        int l = Integer.parseInt(like);
+        int d = Integer.parseInt(dislike);
+        return String.valueOf((float)(l*100/(l+d))*10/100);
     }
     private String editStringTimeLong(String time_long) {
         String min,s,hour;
@@ -85,7 +129,11 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
             return "0"+m;
         }
     }
+    private void getMoreInfoVideo (String id_video,String api){
+        video_id_url+= id_video;
+        api_url+=api;
 
+    }
     @Override
     public int getItemCount() {
         return list.size();

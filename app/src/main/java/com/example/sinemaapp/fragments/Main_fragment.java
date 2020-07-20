@@ -42,8 +42,9 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
     private String Channel_id = "UCoAEj6XaIzqxQ5C5OUIGcZA";
     private String Channel_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&channelId=" + Channel_id + "&maxResults=20&key=" + YouTube_Api;
     private String nextToken = "&pageToken=";
+    String token = "";
     private Toolbar toolbar;
-    private boolean scroll;
+    private boolean scroll = true;
     private ArrayList<VideoApi> list = new ArrayList<VideoApi>();
     private ArrayList list_video_id = new ArrayList();
     private RecyclerView recyclerView;
@@ -70,7 +71,7 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
     }
 
     private void initRecyclerView() {
-        MainFilmAdapter mainFilmAdapter = new MainFilmAdapter(list);
+        MainFilmAdapter mainFilmAdapter = new MainFilmAdapter(list,YouTube_Api);
         recyclerView.setAdapter(mainFilmAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(toolbar.getContext()));
         recyclerView.setOnScrollListener(new ScrollRec() {
@@ -97,8 +98,9 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                 int currentItem = manager.getChildCount();
                 int totalItem = manager.getItemCount();
                 int scrollOutItem = manager.findFirstVisibleItemPosition();
-                    if (currentItem + scrollOutItem -1  == totalItem){
+                    if (scroll && (currentItem + scrollOutItem -1  == totalItem)){
                         getJson();
+                        scroll = false;
                     }
             }
         });
@@ -137,8 +139,8 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
         popupMenu.show();
     }
     private void getJson (){
-        if(nextToken != "&pageToken="){
-            Channel_url += nextToken;
+        if(token != ""){
+            Channel_url += nextToken + token;
         }
         Call<ModelMain> date = YouTubeApi.getVideo().getMainVideo(Channel_url);
         date.enqueue(new Callback<ModelMain>() {
@@ -148,10 +150,14 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(wrapper,"Error Call<ModelMain>: "+ response.errorBody().toString()+" is in onResponse", Toast.LENGTH_SHORT).show();
                 }else{
                     ModelMain modelMain = response.body();
-                    list.addAll(modelMain.getItems());
+                    for(int i = 0;i<modelMain.getItems().size();i++){
+                        if(modelMain.getItems().get(i).getId().getVideoId() != null)
+                            list.add(modelMain.getItems().get(i));
+                    }
                     recyclerView.getAdapter().notifyDataSetChanged();
                     if(modelMain.getNextToken() != null)
-                        nextToken = nextToken + modelMain.getNextToken();
+                         token = modelMain.getNextToken();
+                    scroll = true;
                 }
             }
 

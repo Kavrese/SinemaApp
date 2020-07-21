@@ -50,6 +50,7 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
     private RecyclerView recyclerView;
     private Context wrapper;
     private Button button_tag, button_stars, button_date;
+
     @Nullable
     @Override
 
@@ -60,7 +61,7 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
         toolbar = view.findViewById(R.id.toolbar);
         initRecyclerView();
         FireBaseConnect fireBaseConnect = new FireBaseConnect();
-        fireBaseConnect.setNewUser(new User("icon2","email@gmail.com","123456789",false,1,"name"));
+        fireBaseConnect.setNewUser(new User("icon2", "email@gmail.com", "123456789", false, 1, "name"));
         button_date = view.findViewById(R.id.button_date);
         button_tag = view.findViewById(R.id.button_tag);
         button_stars = view.findViewById(R.id.button_stars);
@@ -71,7 +72,7 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
     }
 
     private void initRecyclerView() {
-        MainFilmAdapter mainFilmAdapter = new MainFilmAdapter(list,YouTube_Api);
+        MainFilmAdapter mainFilmAdapter = new MainFilmAdapter(list, YouTube_Api);
         recyclerView.setAdapter(mainFilmAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(toolbar.getContext()));
         recyclerView.setOnScrollListener(new ScrollRec() {
@@ -98,10 +99,10 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                 int currentItem = manager.getChildCount();
                 int totalItem = manager.getItemCount();
                 int scrollOutItem = manager.findFirstVisibleItemPosition();
-                    if (scroll && (currentItem + scrollOutItem -1  == totalItem)){
-                        getJson();
-                        scroll = false;
-                    }
+                if (scroll && (currentItem + scrollOutItem - 1 == totalItem)) {
+                    getJson();
+                    scroll = false;
+                }
             }
         });
         getJson();
@@ -138,33 +139,36 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
         });
         popupMenu.show();
     }
-    private void getJson (){
-        if(token != ""){
-            Channel_url += nextToken + token;
-        }
-        Call<ModelMain> date = YouTubeApi.getVideo().getMainVideo(Channel_url);
-        date.enqueue(new Callback<ModelMain>() {
-            @Override
-            public void onResponse(Call<ModelMain> call, Response<ModelMain> response) {
-                if(response.errorBody() != null){
-                    Toast.makeText(wrapper,"Error Call<ModelMain>: "+ response.errorBody().toString()+" is in onResponse", Toast.LENGTH_SHORT).show();
-                }else{
-                    ModelMain modelMain = response.body();
-                    for(int i = 0;i<modelMain.getItems().size();i++){
-                        if(modelMain.getItems().get(i).getId().getVideoId() != null)
-                            list.add(modelMain.getItems().get(i));
-                    }
-                    recyclerView.getAdapter().notifyDataSetChanged();
-                    if(modelMain.getNextToken() != null)
-                         token = modelMain.getNextToken();
-                    scroll = true;
-                }
-            }
 
-            @Override
-            public void onFailure(Call<ModelMain> call, Throwable t) {
-                Toast.makeText(wrapper,"Error Call<ModelMain>: "+t.getMessage()+" is in onFailure", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+    private void getJson() {
+        String url = Channel_url;
+
+        if (token != "")
+            url = url + nextToken + token;
+
+            Call<ModelMain> date = YouTubeApi.getVideo().getMainVideo(url);
+            date.enqueue(new Callback<ModelMain>() {
+                @Override
+                public void onResponse(Call<ModelMain> call, Response<ModelMain> response) {
+                    if (response.errorBody() != null) {
+                        Toast.makeText(wrapper, "Error Call<ModelMain>: " + response.errorBody().toString() + " is in onResponse", Toast.LENGTH_SHORT).show();
+                    } else {
+                        ModelMain modelMain = response.body();
+                        for (int i = 0; i < modelMain.getItems().size(); i++) {
+                            if (modelMain.getItems().get(i).getId().getVideoId() != null)
+                                list.add(modelMain.getItems().get(i));
+                        }
+                        recyclerView.getAdapter().notifyDataSetChanged();
+                        if (modelMain.getNextToken() != null)
+                            token = modelMain.getNextToken();
+                        scroll = true;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ModelMain> call, Throwable t) {
+                    Toast.makeText(wrapper, "Error Call<ModelMain>: " + t.getMessage() + " is in onFailure", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 }

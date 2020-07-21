@@ -14,7 +14,7 @@ public class VideoApiFull {
 
     @SerializedName("snippet")
     @Expose
-    SnippetApi snippetApi;
+    SnippetApiFull snippetApi;
 
 
     public VideoApiFull (){}
@@ -31,7 +31,7 @@ public class VideoApiFull {
         return statisticsVideo;
     }
 
-    public SnippetApi getSnippetApi() {
+    public SnippetApiFull getSnippetApi() {
         return snippetApi;
     }
 }

@@ -46,7 +46,6 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
     private Toolbar toolbar;
     private boolean scroll = true;
     private ArrayList<VideoApi> list = new ArrayList<VideoApi>();
-    private ArrayList list_video_id = new ArrayList();
     private RecyclerView recyclerView;
     private Context wrapper;
     private Button button_tag, button_stars, button_date;
@@ -60,8 +59,8 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
         recyclerView = view.findViewById(R.id.recycler);
         toolbar = view.findViewById(R.id.toolbar);
         initRecyclerView();
-        FireBaseConnect fireBaseConnect = new FireBaseConnect();
-        fireBaseConnect.setNewUser(new User("icon2", "email@gmail.com", "123456789", false, 1, "name"));
+     // FireBaseConnect fireBaseConnect = new FireBaseConnect();
+     // fireBaseConnect.setNewUser(new User("icon2", "email@gmail.com", "123456789", false, 1, "name"));
         button_date = view.findViewById(R.id.button_date);
         button_tag = view.findViewById(R.id.button_tag);
         button_stars = view.findViewById(R.id.button_stars);

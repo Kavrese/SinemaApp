@@ -23,6 +23,7 @@ import com.squareup.picasso.Cache;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +34,6 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
     private String base_url = "https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics";
     private String video_id_url = "&id=";
     private String api_url = "&key=";
-
     public MainFilmAdapter(ArrayList<VideoApi> list,String api_url){
         this.list = list;
         this.api_url = this.api_url + api_url;
@@ -67,7 +67,7 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
                 .load(urlImg)
                 .error(android.R.drawable.stat_notify_error)
                 .into(holder.img);
-        String url = base_url+video_id_url+ list.get(position).getId().getVideoId()+api_url;
+        //String url = base_url+video_id_url+ list.get(position).getId().getVideoId()+api_url;
         Call<FullinfoVideo> date = YouTubeApi.getVideo().getInfoVideo(base_url+video_id_url+ list.get(position).getId().getVideoId()+api_url);
         date.enqueue(new Callback<FullinfoVideo>() {
             @Override
@@ -78,13 +78,29 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
                 }else{
                     FullinfoVideo fullinfoVideo = response.body();
                     VideoApiFull videoApiFull = fullinfoVideo.getItems().get(0);
-                    String description = videoApiFull.getSnippetApi().getDescription();
+                    final String des = videoApiFull.getSnippetApi().getDescription();
                     String timeLong = videoApiFull.getContentDetails().getDuration();
                     String like = videoApiFull.getStatisticsVideo().getLikeCount();
                     String dislike = videoApiFull.getStatisticsVideo().getDislikeCount();
-
+                    final String stars = editStar(like,dislike);
+                    Random random = new Random();
+                    String tag = videoApiFull.getSnippetApi().getTags().get(random.nextInt(videoApiFull.getSnippetApi().getTags().size()));
+                    holder.tag.setText(tag);
                     holder.time_long.setText(editStringTimeLong(timeLong));
-                    holder.star.setText(editStar(like,dislike));
+                    holder.star.setText(stars);
+
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent in = new Intent(holder.itemView.getContext(),PageFilm.class);
+                            in.putExtra("img",list.get(position).getSnippet().getThumbnails().getHigh().getUrl());
+                            in.putExtra("name",list.get(position).getSnippet().getTitle());
+                            in.putExtra("des",des);
+                            in.putExtra("id_video",list.get(position).getId().getVideoId());
+                            in.putExtra("stars",stars);
+                            holder.itemView.getContext().startActivity(in);
+                        }
+                    });
                 }
             }
 

@@ -13,12 +13,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sinemaapp.R;
+import com.example.sinemaapp.model.FullinfoVideo;
+import com.example.sinemaapp.model.ModelMain;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PageFilm extends YouTubeBaseActivity {
     private String img,des,name,id_video;
@@ -27,7 +33,13 @@ public class PageFilm extends YouTubeBaseActivity {
     FloatingActionButton floatingActionButton;
     TextView name_video, description;
     YouTubePlayerView player;
+    private boolean full;
+    private String video_id = "&id=";
     private String YouTube_Api = "AIzaSyB2P4Q7d234l-EI_oO6dAi-BlbMpuOg0CE";
+    private String base = "https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&key="+YouTube_Api;
+
+    private String desc;
+    private String stars;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +61,13 @@ public class PageFilm extends YouTubeBaseActivity {
             public void onInitializationSuccess(YouTubePlayer.Provider provider, final YouTubePlayer youTubePlayer, boolean b) {
                 youTubePlayer.setPlayerStateChangeListener(playerStateChangeListener);
                 youTubePlayer.setPlaybackEventListener(playbackEventListener);
-                if (!b) {
-                    youTubePlayer.cueVideo(id_video);
-                }
+                youTubePlayer.cueVideo(id_video);
+
                 floatingActionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         youTubePlayer.setFullscreen(true);
-                        youTubePlayer.play();
+                        youTubePlayer.play();   //Не работает. Не знаю почему
                     }
                 });
             }
@@ -67,37 +78,34 @@ public class PageFilm extends YouTubeBaseActivity {
             }
         });
     }
-
     private void getIntentData() {
         img = getIntent().getStringExtra("img");
         name = getIntent().getStringExtra("name");
         des = getIntent().getStringExtra("des");
         id_video = getIntent().getStringExtra("id_video");
+        stars = getIntent().getStringExtra("stars");
     }
     private YouTubePlayer.PlayerStateChangeListener playerStateChangeListener = new YouTubePlayer.PlayerStateChangeListener() {
         @Override
         public void onLoading() {
 
         }
-
         @Override
         public void onLoaded(String s) {
-        }
 
+        }
         @Override
         public void onAdStarted() {
 
         }
-
         @Override
         public void onVideoStarted() {
-        }
 
+        }
         @Override
         public void onVideoEnded() {
 
         }
-
         @Override
         public void onError(YouTubePlayer.ErrorReason errorReason) {
 
@@ -108,22 +116,18 @@ public class PageFilm extends YouTubeBaseActivity {
         public void onPlaying() {
 
         }
-
         @Override
         public void onPaused() {
 
         }
-
         @Override
         public void onStopped() {
 
         }
-
         @Override
         public void onBuffering(boolean b) {
 
         }
-
         @Override
         public void onSeekTo(int i) {
 

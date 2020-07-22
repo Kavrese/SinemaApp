@@ -2,6 +2,7 @@ package com.example.sinemaapp.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -29,6 +30,8 @@ import com.example.sinemaapp.model.Film;
 import com.example.sinemaapp.model.ModelMain;
 import com.example.sinemaapp.model.User;
 import com.example.sinemaapp.model.VideoApi;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,13 +153,22 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
 
         if (token != "")
             url = url + nextToken + token;
-
+            Log.e("url",url);
             Call<ModelMain> date = YouTubeApi.getVideo().getMainVideo(url);
             date.enqueue(new Callback<ModelMain>() {
                 @Override
                 public void onResponse(Call<ModelMain> call, Response<ModelMain> response) {
                     if (response.errorBody() != null) {
                         Toast.makeText(wrapper, "Error Call<ModelMain>: " + response.errorBody().toString() + " is in onResponse", Toast.LENGTH_SHORT).show();
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            Log.e("error",jObjError.getJSONObject("error").getString("message"));
+                            if(jObjError.getJSONObject("error").getString("message").equals("The request cannot be completed because you have exceeded your <a href=\"/youtube/v3/getting-started#quota\">quota</a>.")){
+                                Toast.makeText(wrapper, "Закончились квоты на api. Подождите до полуночи, пока они обновляются, и попробуйте еще раз", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
                     } else {
                         ModelMain modelMain = response.body();
                         for (int i = 0; i < modelMain.getItems().size(); i++) {
@@ -174,6 +186,7 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onFailure(Call<ModelMain> call, Throwable t) {
                     Toast.makeText(wrapper, "Error Call<ModelMain>: " + t.getMessage() + " is in onFailure", Toast.LENGTH_SHORT).show();
+                    Log.e("onFailure",t.getMessage());
                 }
             });
         }

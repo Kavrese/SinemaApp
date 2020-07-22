@@ -22,18 +22,13 @@ public class SnippetApi {
     @Expose
     private ThumbnailApi thumbnails;
 
-    @SerializedName("tags")
-    @Expose
-    private List<TagModel> tags;
-
     public SnippetApi(){}
 
-    public SnippetApi (String publishedAt,String title,String description,ThumbnailApi thumbnails,List<TagModel> tags){
+    public SnippetApi (String publishedAt,String title,String description,ThumbnailApi thumbnails){
         this.description = description;
         this.thumbnails = thumbnails;
         this.title = title;
         this.publishedAt = publishedAt;
-        this.tags = tags;
     }
 
     public String getPublishedAt() {
@@ -50,9 +45,5 @@ public class SnippetApi {
 
     public ThumbnailApi getThumbnails() {
         return thumbnails;
-    }
-
-    public List<TagModel> getTags() {
-        return tags;
     }
 }

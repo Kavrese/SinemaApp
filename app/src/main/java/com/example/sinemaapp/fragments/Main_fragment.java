@@ -33,6 +33,7 @@ import com.example.sinemaapp.model.VideoApi;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.droidsonroids.gif.GifImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,6 +41,7 @@ import retrofit2.Response;
 public class Main_fragment extends Fragment implements View.OnClickListener {
     private static String YouTube_Api = "AIzaSyB2P4Q7d234l-EI_oO6dAi-BlbMpuOg0CE";
     private String Channel_id = "UCoAEj6XaIzqxQ5C5OUIGcZA";
+    private GifImageView load;
     private String Channel_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&channelId=" + Channel_id + "&maxResults=20&key=" + YouTube_Api;
     private String nextToken = "&pageToken=";
     String token = "";
@@ -56,6 +58,8 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_fragment, container, false);
         wrapper = new ContextThemeWrapper(inflater.getContext(), R.style.PopurMenuDark);
+        load = view.findViewById(R.id.load);
+        load.setVisibility(View.GONE);
         recyclerView = view.findViewById(R.id.recycler);
         toolbar = view.findViewById(R.id.toolbar);
         initRecyclerView();
@@ -100,6 +104,7 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                 int scrollOutItem = manager.findFirstVisibleItemPosition();
                 if (scroll && (currentItem + scrollOutItem - 1 == totalItem)) {
                     getJson();
+                    load.setVisibility(View.VISIBLE);
                     scroll = false;
                 }
             }
@@ -161,6 +166,7 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                         if (modelMain.getNextToken() != null)
                             token = modelMain.getNextToken();
                         scroll = true;
+                        load.setVisibility(View.GONE);
                     }
                 }
 

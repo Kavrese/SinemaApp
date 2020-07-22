@@ -109,7 +109,8 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
-        getJson();
+        if(list.size() == 0)
+            getJson();
     }
 
     private void hideViews() {

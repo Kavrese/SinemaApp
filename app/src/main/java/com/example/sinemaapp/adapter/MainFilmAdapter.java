@@ -80,8 +80,9 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
                     VideoApiFull videoApiFull = fullinfoVideo.getItems().get(0);
                     final String des = videoApiFull.getSnippetApi().getDescription();
                     String timeLong = videoApiFull.getContentDetails().getDuration();
-                    String like = videoApiFull.getStatisticsVideo().getLikeCount();
-                    String dislike = videoApiFull.getStatisticsVideo().getDislikeCount();
+                    final String like = videoApiFull.getStatisticsVideo().getLikeCount();
+                    final String dislike = videoApiFull.getStatisticsVideo().getDislikeCount();
+                    final String views = videoApiFull.getStatisticsVideo().getViewCount();
                     final String stars = editStar(like,dislike);
                     Random random = new Random();
                     String tag = videoApiFull.getSnippetApi().getTags().get(random.nextInt(videoApiFull.getSnippetApi().getTags().size()));
@@ -97,7 +98,9 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
                             in.putExtra("name",list.get(position).getSnippet().getTitle());
                             in.putExtra("des",des);
                             in.putExtra("id_video",list.get(position).getId().getVideoId());
-                            in.putExtra("stars",stars);
+                            in.putExtra("like",like);
+                            in.putExtra("dislike",dislike);
+                            in.putExtra("view",views);
                             holder.itemView.getContext().startActivity(in);
                         }
                     });

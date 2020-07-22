@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:weightSum="100">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="6"
+        android:background="@drawable/search_maket"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="9dp"
+            android:layout_weight="10"
+            app:srcCompat="@drawable/search_light" />
+
+        <EditText
+            android:id="@+id/search_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:imeOptions="actionSearch"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="85"
+            android:background="@color/dark_2"
+            android:ems="10"
+            android:gravity="left|center"
+            android:hint="Введите название видео"
+            android:inputType="text"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#717171"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+</LinearLayout>

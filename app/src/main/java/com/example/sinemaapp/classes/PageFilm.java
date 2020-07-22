@@ -31,15 +31,12 @@ public class PageFilm extends YouTubeBaseActivity {
     ImageView img_video;
     ScrollView scroll;
     FloatingActionButton floatingActionButton;
-    TextView name_video, description;
+    TextView name_video, description,view_count,like_count,dislike_count;
     YouTubePlayerView player;
-    private boolean full;
-    private String video_id = "&id=";
     private String YouTube_Api = "AIzaSyB2P4Q7d234l-EI_oO6dAi-BlbMpuOg0CE";
-    private String base = "https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&key="+YouTube_Api;
-
-    private String desc;
-    private String stars;
+    private String view;
+    private String like;
+    private String dislike;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +45,9 @@ public class PageFilm extends YouTubeBaseActivity {
         scroll = findViewById(R.id.scroll);
         player = findViewById(R.id.player);
         img_video = findViewById(R.id.img_video);
+        like_count = findViewById(R.id.like_count);
+        view_count = findViewById(R.id.view_count);
+        dislike_count = findViewById(R.id.dislike_count);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         name_video = findViewById(R.id.name_video);
         description = findViewById(R.id.descriptions);
@@ -56,6 +56,10 @@ public class PageFilm extends YouTubeBaseActivity {
                 .into(img_video);
         name_video.setText(name);
         description.setText(des);
+        like_count.setText(like);
+        dislike_count.setText(dislike);
+        view_count.setText(view);
+
         player.initialize(YouTube_Api, new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, final YouTubePlayer youTubePlayer, boolean b) {
@@ -83,7 +87,9 @@ public class PageFilm extends YouTubeBaseActivity {
         name = getIntent().getStringExtra("name");
         des = getIntent().getStringExtra("des");
         id_video = getIntent().getStringExtra("id_video");
-        stars = getIntent().getStringExtra("stars");
+        like = getIntent().getStringExtra("like");
+        dislike = getIntent().getStringExtra("dislike");
+        view = getIntent().getStringExtra("view");
     }
     private YouTubePlayer.PlayerStateChangeListener playerStateChangeListener = new YouTubePlayer.PlayerStateChangeListener() {
         @Override

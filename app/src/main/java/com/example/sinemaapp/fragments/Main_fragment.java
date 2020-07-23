@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sinemaapp.R;
+import com.example.sinemaapp.classes.Errors;
 import com.example.sinemaapp.classes.ScrollRec;
 import com.example.sinemaapp.adapter.MainFilmAdapter;
 import com.example.sinemaapp.classes.FireBaseConnect;
@@ -42,10 +43,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Main_fragment extends Fragment implements View.OnClickListener {
-    private static String YouTube_Api = "AIzaSyB2P4Q7d234l-EI_oO6dAi-BlbMpuOg0CE";
+    private static String YouTube_Api;
     private String Channel_id = "UCoAEj6XaIzqxQ5C5OUIGcZA";
     private GifImageView load;
-    private String Channel_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&channelId=" + Channel_id + "&maxResults=20&key=" + YouTube_Api;
+    private String Channel_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&channelId=" + Channel_id + "&maxResults=20&key=";
     private String nextToken = "&pageToken=";
     String token = "";
     private Toolbar toolbar;
@@ -60,6 +61,8 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_fragment, container, false);
+        YouTube_Api = getString(R.string.api);
+        Channel_url += YouTube_Api;
         wrapper = new ContextThemeWrapper(inflater.getContext(), R.style.PopurMenuDark);
         load = view.findViewById(R.id.load);
         load.setVisibility(View.GONE);
@@ -159,16 +162,7 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onResponse(Call<ModelMain> call, Response<ModelMain> response) {
                     if (response.errorBody() != null) {
-                        Toast.makeText(wrapper, "Error Call<ModelMain>: " + response.errorBody().toString() + " is in onResponse", Toast.LENGTH_SHORT).show();
-                        try {
-                            JSONObject jObjError = new JSONObject(response.errorBody().string());
-                            Log.e("error",jObjError.getJSONObject("error").getString("message"));
-                            if(jObjError.getJSONObject("error").getString("message").equals("The request cannot be completed because you have exceeded your <a href=\"/youtube/v3/getting-started#quota\">quota</a>.")){
-                                Toast.makeText(wrapper, "Закончились квоты на api. Подождите до полуночи, пока они обновляются, и попробуйте еще раз", Toast.LENGTH_LONG).show();
-                            }
-                        } catch (Exception e) {
-                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
+                        new Errors(response,null,"ModelMain",recyclerView.getContext(),"onResponse MainFragment");
                     } else {
                         ModelMain modelMain = response.body();
                         for (int i = 0; i < modelMain.getItems().size(); i++) {
@@ -185,8 +179,7 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
 
                 @Override
                 public void onFailure(Call<ModelMain> call, Throwable t) {
-                    Toast.makeText(wrapper, "Error Call<ModelMain>: " + t.getMessage() + " is in onFailure", Toast.LENGTH_SHORT).show();
-                    Log.e("onFailure",t.getMessage());
+                    new Errors(t,recyclerView.getContext(),"onFailure MainFragment");
                 }
             });
         }

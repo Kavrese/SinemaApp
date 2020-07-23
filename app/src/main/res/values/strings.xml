@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Sinema App</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="api">AIzaSyB2P4Q7d234l-EI_oO6dAi-BlbMpuOg0CE</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="main_menu">Главная</string>
     <string name="main_search">Поиск</string>

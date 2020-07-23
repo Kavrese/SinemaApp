@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.sinemaapp.R;
 import com.example.sinemaapp.fragments.Main_fragment;
+import com.example.sinemaapp.fragments.Potok_fragment;
 import com.example.sinemaapp.fragments.Search_fragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +29,7 @@ FragmentManager manager;
 BottomNavigationView bnv;
 Main_fragment main_fragment = new Main_fragment();
 Search_fragment search_fragment= new Search_fragment();
+Potok_fragment potok_fragment = new Potok_fragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,7 @@ Search_fragment search_fragment= new Search_fragment();
                         break;
                     case R.id.rec:
                         item.setChecked(true);
+                        manager.beginTransaction().replace(R.id.fragment,potok_fragment).commit();
                         break;
                     case R.id.profile:
                         item.setChecked(true);

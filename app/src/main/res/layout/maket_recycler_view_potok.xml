@@ -51,7 +51,8 @@
         android:gravity="center"
         android:text="TextView"
         android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:autoSizeTextType="uniform" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -26,14 +26,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PageFilm extends YouTubeBaseActivity {
+public class PageFilm extends AppCompatActivity {
     private String img,des,name,id_video;
     ImageView img_video;
     ScrollView scroll;
     FloatingActionButton floatingActionButton;
     TextView name_video, description,view_count,like_count,dislike_count;
     YouTubePlayerView player;
-    private String YouTube_Api = "AIzaSyB2P4Q7d234l-EI_oO6dAi-BlbMpuOg0CE";
     private String view;
     private String like;
     private String dislike;
@@ -59,26 +58,12 @@ public class PageFilm extends YouTubeBaseActivity {
         like_count.setText(like);
         dislike_count.setText(dislike);
         view_count.setText(view);
-
-        player.initialize(YouTube_Api, new YouTubePlayer.OnInitializedListener() {
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, final YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.setPlayerStateChangeListener(playerStateChangeListener);
-                youTubePlayer.setPlaybackEventListener(playbackEventListener);
-                youTubePlayer.cueVideo(id_video);
-
-                floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        youTubePlayer.setFullscreen(true);
-                        youTubePlayer.play();   //Не работает. Не знаю почему
-                    }
-                });
-            }
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-                Log.e("load video", String.valueOf(youTubeInitializationResult.isUserRecoverableError()));
-
+            public void onClick(View view) {
+                Intent in = new Intent(PageFilm.this,PlayerActivity.class);
+                in.putExtra("id_video",id_video);
+                startActivity(in);
             }
         });
     }
@@ -91,52 +76,5 @@ public class PageFilm extends YouTubeBaseActivity {
         dislike = getIntent().getStringExtra("dislike");
         view = getIntent().getStringExtra("view");
     }
-    private YouTubePlayer.PlayerStateChangeListener playerStateChangeListener = new YouTubePlayer.PlayerStateChangeListener() {
-        @Override
-        public void onLoading() {
 
-        }
-        @Override
-        public void onLoaded(String s) {
-
-        }
-        @Override
-        public void onAdStarted() {
-
-        }
-        @Override
-        public void onVideoStarted() {
-
-        }
-        @Override
-        public void onVideoEnded() {
-
-        }
-        @Override
-        public void onError(YouTubePlayer.ErrorReason errorReason) {
-
-        }
-    };
-    private YouTubePlayer.PlaybackEventListener playbackEventListener = new YouTubePlayer.PlaybackEventListener() {
-        @Override
-        public void onPlaying() {
-
-        }
-        @Override
-        public void onPaused() {
-
-        }
-        @Override
-        public void onStopped() {
-
-        }
-        @Override
-        public void onBuffering(boolean b) {
-
-        }
-        @Override
-        public void onSeekTo(int i) {
-
-        }
-    };
 }

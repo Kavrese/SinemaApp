@@ -1,5 +1,6 @@
 package com.example.sinemaapp.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sinemaapp.R;
 import com.example.sinemaapp.classes.Errors;
+import com.example.sinemaapp.classes.PageFilm;
+import com.example.sinemaapp.classes.PlayerActivity;
 import com.example.sinemaapp.classes.YouTubeApi;
 import com.example.sinemaapp.model.FullinfoVideo;
 import com.example.sinemaapp.model.VideoApi;
@@ -53,12 +56,20 @@ public class PotokAdapter extends RecyclerView.Adapter<PotokAdapter.PotockViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final PotockViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final PotockViewHolder holder, final int position) {
         VideoApi videoApi = list.get(position);
         Picasso.get()
                 .load(videoApi.getSnippet().getThumbnails().getHigh().getUrl())
                 .into(holder.img);
         holder.name.setText(videoApi.getSnippet().getTitle());
+        holder.play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in_player = new Intent(holder.itemView.getContext(), PlayerActivity.class);
+                in_player.putExtra("id_video",list.get(position).getId().getVideoId());
+                holder.itemView.getContext().startActivity(in_player);
+            }
+        });
         Call<FullinfoVideo> date = YouTubeApi.getVideo().getInfoVideo(base_url+video_id_url+ list.get(position).getId().getVideoId()+api_url);
         date.enqueue(new Callback<FullinfoVideo>() {
             @Override
@@ -66,8 +77,22 @@ public class PotokAdapter extends RecyclerView.Adapter<PotokAdapter.PotockViewHo
                 if(response.errorBody() != null){
                     new Errors(null,response,"FullVideoApi",holder.itemView.getContext(),"onResponse");
                 }else{
-                    FullinfoVideo fullinfoVideo = response.body();
-                    holder.des.setText(fullinfoVideo.getItems().get(0).getSnippetApi().getDescription());
+                    final FullinfoVideo fullinfoVideo = response.body();
+                    holder.des.setText(list.get(position).getSnippet().getDescription());
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent in = new Intent(holder.itemView.getContext(), PageFilm.class);
+                            in.putExtra("img",list.get(position).getSnippet().getThumbnails().getHigh().getUrl());
+                            in.putExtra("name",list.get(position).getSnippet().getTitle());
+                            in.putExtra("des",fullinfoVideo.getItems().get(0).getSnippetApi().getDescription());
+                            in.putExtra("id_video",list.get(position).getId().getVideoId());
+                            in.putExtra("like",fullinfoVideo.getItems().get(0).getStatisticsVideo().getLikeCount());
+                            in.putExtra("dislike",fullinfoVideo.getItems().get(0).getStatisticsVideo().getDislikeCount());
+                            in.putExtra("view",fullinfoVideo.getItems().get(0).getStatisticsVideo().getViewCount());
+                            holder.itemView.getContext().startActivity(in);
+                        }
+                    });
                 }
             }
 

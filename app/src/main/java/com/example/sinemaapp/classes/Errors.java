@@ -13,11 +13,15 @@ import retrofit2.Response;
 
 public class Errors {
     public Errors (Response<ModelMain> responseM, Response<FullinfoVideo> responseF, String mode, Context context,String from) {
-        Response response;
+        Response response = null;
         if(mode.equals("ModelMain"))
             response = responseM;
-        else
+        else if(mode.equals("FullVideoApi"))
             response = responseF;
+        else if(mode.equals("No full info")){
+            Toast.makeText(context, "Error info: No info", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (response.errorBody() != null) {
             try {

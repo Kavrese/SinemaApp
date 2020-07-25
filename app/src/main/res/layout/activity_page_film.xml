@@ -177,12 +177,6 @@
                     android:linksClickable="true"
                     android:textColor="#DCDCDC"
                     android:textSize="18sp" />
-
-                <com.google.android.youtube.player.YouTubePlayerView
-                    android:id="@+id/player"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:visibility="gone" />
             </LinearLayout>
         </ScrollView>
 

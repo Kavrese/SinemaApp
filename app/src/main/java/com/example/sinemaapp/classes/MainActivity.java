@@ -36,6 +36,7 @@ Potok_fragment potok_fragment = new Potok_fragment();
         setContentView(R.layout.activity_main);
         manager = getSupportFragmentManager();
         bnv = findViewById(R.id.bnv);
+        manager.beginTransaction().replace(R.id.fragment,main_fragment).commit();
         bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

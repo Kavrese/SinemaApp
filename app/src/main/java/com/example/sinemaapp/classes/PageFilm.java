@@ -2,6 +2,7 @@ package com.example.sinemaapp.classes;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,7 +44,7 @@ public class PageFilm extends AppCompatActivity {
         getIntentData();
         scroll = findViewById(R.id.scroll);
         player = findViewById(R.id.player);
-        img_video = findViewById(R.id.img_video);
+        img_video = findViewById(R.id.img);
         like_count = findViewById(R.id.like_count);
         view_count = findViewById(R.id.view_count);
         dislike_count = findViewById(R.id.dislike_count);

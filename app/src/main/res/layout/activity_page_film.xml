@@ -43,11 +43,11 @@
                         android:visibility="visible">
 
                         <ImageView
-                            android:id="@+id/img_video"
+                            android:id="@+id/img"
                             android:layout_width="match_parent"
                             android:layout_height="500dp"
                             android:scaleType="centerCrop"
-                            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                            android:transitionName="@string/tra_video_prev" />
 
                     </LinearLayout>
                 </com.github.florent37.shapeofview.shapes.ArcView>

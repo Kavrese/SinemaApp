@@ -1,6 +1,9 @@
 package com.example.sinemaapp.adapter;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +70,7 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
                 .load(urlImg)
                 .error(android.R.drawable.stat_notify_error)
                 .into(holder.img);
+        View v = holder.img;
         //String url = base_url+video_id_url+ list.get(position).getId().getVideoId()+api_url;
         Call<FullinfoVideo> date = YouTubeApi.getVideo().getInfoVideo(base_url+video_id_url+ list.get(position).getId().getVideoId()+api_url);
         date.enqueue(new Callback<FullinfoVideo>() {
@@ -93,7 +97,7 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent in = new Intent(holder.itemView.getContext(),PageFilm.class);
+                            Intent in = new Intent((Activity)holder.itemView.getContext(),PageFilm.class);
                             in.putExtra("img",list.get(position).getSnippet().getThumbnails().getHigh().getUrl());
                             in.putExtra("name",list.get(position).getSnippet().getTitle());
                             in.putExtra("des",des);
@@ -101,7 +105,8 @@ public class MainFilmAdapter extends RecyclerView.Adapter<MainFilmAdapter.FilmVi
                             in.putExtra("like",like);
                             in.putExtra("dislike",dislike);
                             in.putExtra("view",views);
-                            holder.itemView.getContext().startActivity(in);
+                            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) holder.itemView.getContext(),holder.img,"prev");
+                            holder.itemView.getContext().startActivity(in,options.toBundle());
                         }
                     });
                 }

@@ -1,5 +1,7 @@
 package com.example.sinemaapp.adapter;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,7 +92,8 @@ public class PotokAdapter extends RecyclerView.Adapter<PotokAdapter.PotockViewHo
                             in.putExtra("like",fullinfoVideo.getItems().get(0).getStatisticsVideo().getLikeCount());
                             in.putExtra("dislike",fullinfoVideo.getItems().get(0).getStatisticsVideo().getDislikeCount());
                             in.putExtra("view",fullinfoVideo.getItems().get(0).getStatisticsVideo().getViewCount());
-                            holder.itemView.getContext().startActivity(in);
+                            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) holder.itemView.getContext(),holder.img,"prev");
+                            holder.itemView.getContext().startActivity(in,options.toBundle());
                         }
                     });
                 }

@@ -2,6 +2,7 @@ package com.example.sinemaapp.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -12,7 +13,6 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
@@ -25,17 +25,11 @@ import com.example.sinemaapp.R;
 import com.example.sinemaapp.classes.Errors;
 import com.example.sinemaapp.classes.ScrollRec;
 import com.example.sinemaapp.adapter.MainFilmAdapter;
-import com.example.sinemaapp.classes.FireBaseConnect;
 import com.example.sinemaapp.classes.YouTubeApi;
-import com.example.sinemaapp.model.Film;
 import com.example.sinemaapp.model.ModelMain;
-import com.example.sinemaapp.model.User;
 import com.example.sinemaapp.model.VideoApi;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import pl.droidsonroids.gif.GifImageView;
 import retrofit2.Call;
@@ -112,6 +106,17 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                     getJson();
                     load.setVisibility(View.VISIBLE);
                     scroll = false;
+                    while (!scroll) {   //Пока загружается новые видосы
+                        new Handler().postDelayed(new Runnable() {      //Ставим таймер
+                            @Override
+                            public void run() {     //Если
+                                if(!scroll) {   //Если после истечения времени scroll останется false, то
+                                    getJson();  //Перезапускаем запрос
+                                    new Errors(null, null, "loading new videos", getContext(), "Main_fragment");
+                                }
+                            }
+                        }, 5000); //На 5000 сек
+                    }
                 }
             }
         });

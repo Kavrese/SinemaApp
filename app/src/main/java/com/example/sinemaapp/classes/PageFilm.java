@@ -2,30 +2,18 @@ package com.example.sinemaapp.classes;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sinemaapp.R;
-import com.example.sinemaapp.model.FullinfoVideo;
-import com.example.sinemaapp.model.ModelMain;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.youtube.player.YouTubeBaseActivity;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PageFilm extends AppCompatActivity {
     private String img,des,name,id_video;

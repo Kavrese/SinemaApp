@@ -20,6 +20,11 @@ public class Errors {
             response = responseF;
         else if(mode.equals("No full info")){
             Toast.makeText(context, "Error info: No info", Toast.LENGTH_SHORT).show();
+            Log.e("error","Error info: No info");
+            return;
+        }else if(mode.equals("loading new videos")){
+            Toast.makeText(context, "Error loading: Restart loading new videos" + " - "+from, Toast.LENGTH_SHORT).show();
+            Log.e("error","Error loading: Restart loading new videos"+" - "+from);
             return;
         }
 

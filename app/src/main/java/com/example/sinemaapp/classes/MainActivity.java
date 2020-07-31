@@ -2,10 +2,12 @@ package com.example.sinemaapp.classes;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.sinemaapp.R;
 import com.example.sinemaapp.fragments.Main_fragment;

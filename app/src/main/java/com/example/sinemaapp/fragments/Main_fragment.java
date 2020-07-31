@@ -109,7 +109,7 @@ public class Main_fragment extends Fragment implements View.OnClickListener {
                     while (!scroll) {   //Пока загружается новые видосы
                         new Handler().postDelayed(new Runnable() {      //Ставим таймер
                             @Override
-                            public void run() {     //Если
+                            public void run() {
                                 if(!scroll) {   //Если после истечения времени scroll останется false, то
                                     getJson();  //Перезапускаем запрос
                                     new Errors(null, null, "loading new videos", getContext(), "Main_fragment");

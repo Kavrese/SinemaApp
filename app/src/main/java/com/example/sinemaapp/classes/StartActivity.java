@@ -31,6 +31,7 @@ EditText pas,log;
 MotionLayout layout;
 LinearLayout lin,lin_email;
 boolean ver_good;
+boolean exit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,11 @@ boolean ver_good;
         enter = findViewById(R.id.enter);
         reg = findViewById(R.id.reg);
         layout = findViewById(R.id.motionLayout);
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){        //Пользователь уже входил раньше
+            Intent in = new Intent(StartActivity.this,MainActivity.class);
+            startActivity(in);
+            finish();
+        }
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,6 +147,22 @@ boolean ver_good;
                       }
                     }
             });
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!exit){
+            exit = true;
+            Snackbar.make(enter,"Нажмите ещё раз что-бы выйти",BaseTransientBottomBar.LENGTH_LONG).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            },2000);
+        }else{
+            finish();
         }
     }
 }

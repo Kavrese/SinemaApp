@@ -50,17 +50,26 @@
                 app:layout_anchor="@+id/shape_lin"
                 app:layout_anchorGravity="bottom">
 
-                <ImageView
+                <com.github.florent37.shapeofview.shapes.CircleView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/maket_action_buttom"
-                    android:visibility="visible" />
+                    android:elevation="4dp"
+                    app:shape_circle_borderColor="@android:color/white"
+                    app:shape_circle_borderWidth="1.5dp">
+                    <ImageView
+                        android:id="@+id/avatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@color/dark">
+                    </ImageView>
+
+                </com.github.florent37.shapeofview.shapes.CircleView>
 
                 <TextView
                     android:id="@+id/date_created"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:text="Дата регестрации: "
                     android:textColor="@color/white"
                     android:textSize="16sp" />

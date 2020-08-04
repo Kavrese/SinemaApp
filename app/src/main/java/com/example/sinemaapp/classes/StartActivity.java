@@ -134,6 +134,7 @@ boolean exit;
                                                     ver_good = FirebaseAuth.getInstance().getCurrentUser().isEmailVerified();
                                                     if(ver_good) {
                                                         Snackbar.make(reg, "Адрес потверждён", BaseTransientBottomBar.LENGTH_SHORT).show();
+                                                        new FireBaseConnect().setBdUser("no","no",email,password,false,email.substring(0,email.indexOf("@")),lin);
                                                         Intent in = new Intent(StartActivity.this,MainActivity.class);
                                                         startActivity(in);
                                                         finish();

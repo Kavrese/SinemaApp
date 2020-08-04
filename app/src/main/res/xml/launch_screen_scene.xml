@@ -22,6 +22,16 @@
             android:id="@+id/dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:layout_height="200dp"
+            android:layout_width="200dp"
+            android:id="@+id/icon"
+            android:alpha="0"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </ConstraintSet>
 
@@ -70,6 +80,12 @@
             android:id="@+id/dark"
             app:layout_constraintEnd_toEndOf="@id/grey"
             app:layout_constraintTop_toTopOf="@id/grey" />
+        <Constraint
+            android:layout_height="150dp"
+            app:layout_editor_absoluteX="106dp"
+            app:layout_constraintBottom_toTopOf="parent"
+            android:layout_width="150dp"
+            android:id="@+id/icon" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/actor_set3">
@@ -108,8 +124,79 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/dark"
             app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:alpha="0"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:id="@+id/lin_email"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/dark"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <Constraint
+            android:layout_height="150dp"
+            app:layout_constraintBottom_toTopOf="@+id/lin_email"
+            android:layout_width="150dp"
+            android:id="@+id/icon"
+            app:layout_constraintTop_toTopOf="@id/dark"
+            app:layout_constraintStart_toStartOf="@+id/dark"
+            app:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
 
+    <ConstraintSet android:id="@+id/actor_set4">
+        <Constraint
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:alpha="0"
+            android:id="@+id/lin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/dark"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_editor_absoluteX="311dp" />
+        <Constraint
+            android:id="@+id/grey"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp" />
+        <Constraint
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/dark"
+            app:layout_constraintEnd_toEndOf="@id/grey"
+            app:layout_constraintTop_toTopOf="@id/grey"
+            app:layout_constraintBottom_toTopOf="@+id/grey"
+            app:layout_constraintStart_toStartOf="@+id/grey"
+            android:layout_marginLeft="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="40dp" />
+        <Constraint
+            android:layout_height="200dp"
+            app:layout_constraintStart_toStartOf="@+id/dark"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="300dp"
+            android:id="@+id/lin_email" />
+        <Constraint
+            android:layout_height="150dp"
+            app:layout_constraintBottom_toTopOf="@+id/lin_email"
+            android:layout_width="150dp"
+            android:id="@+id/icon"
+            app:layout_constraintTop_toTopOf="@id/dark"
+            app:layout_constraintStart_toStartOf="@+id/dark"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </ConstraintSet>
     <Transition
         android:id="@+id/tra1"
         app:constraintSetStart="@id/starting_set"
@@ -134,6 +221,19 @@
                 app:motionTarget="@+id/lin"
                 app:framePosition="75"
                 android:alpha="0" />
+            <KeyAttribute
+                app:motionTarget="@+id/icon"
+                app:framePosition="50"
+                android:alpha="0" />
+            <KeyAttribute
+                app:motionTarget="@+id/icon"
+                app:framePosition="20"
+                android:alpha="0" />
         </KeyFrameSet>
+    </Transition>
+    <Transition
+        android:id="@+id/tra4"
+        app:constraintSetStart="@id/actor_set3"
+        app:constraintSetEnd="@id/actor_set4">
     </Transition>
 </MotionScene>

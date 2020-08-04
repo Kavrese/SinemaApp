@@ -22,20 +22,94 @@
         tools:layout_editor_absoluteX="20dp" />
 
     <ImageView
+        android:alpha="0"
         android:id="@+id/dark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@color/dark"
         tools:layout_editor_absoluteX="20dp" />
 
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/icon"
+        tools:layout_editor_absoluteX="106dp"
+        tools:layout_editor_absoluteY="33dp" />
+    <LinearLayout
+        android:id="@+id/lin_email"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:alpha="0"
+        android:orientation="vertical"
+        android:weightSum="100"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/text_email"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="30"
+            android:background="#000000"
+            android:text="Потвердите адрес электронной почты"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:autoSizeTextType="uniform" />
+
+        <TextView
+            android:id="@+id/content_email"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="55"
+            android:background="#000000"
+            android:text="Мы отправили вам письмо с потверждением электронной почты. Пожалуйста перейдите по ссылке в письме"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:autoSizeTextType="none" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/back_email"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight="5"
+                android:background="@drawable/maket_button"
+                android:drawableLeft="@drawable/abc_vector_test"
+                android:text="Назад"
+                android:textColor="@color/colorAccent" />
+
+            <Button
+                android:id="@+id/good_email"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight="5"
+                android:background="@drawable/maket_button"
+                android:text="Готово"
+                android:textColor="@color/colorAccent" />
+        </LinearLayout>
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/lin"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
         android:weightSum="50"
-        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +122,7 @@
             android:layout_weight="12"
             android:background="@drawable/maket_button"
             android:gravity="center"
-            android:hint="Введите ник/логин"
+            android:hint="Введите адрес электроной почты"
             android:maxLines="1"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
@@ -95,4 +169,5 @@
             android:text="Зарегестрироваться"
             android:textColor="@color/blue" />
     </LinearLayout>
+
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -3,7 +3,9 @@ package com.example.sinemaapp.classes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.motion.widget.MotionLayout;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +34,7 @@ MotionLayout layout;
 LinearLayout lin,lin_email;
 boolean ver_good;
 boolean exit;
+private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,7 +137,7 @@ boolean exit;
                                                     ver_good = FirebaseAuth.getInstance().getCurrentUser().isEmailVerified();
                                                     if(ver_good) {
                                                         Snackbar.make(reg, "Адрес потверждён", BaseTransientBottomBar.LENGTH_SHORT).show();
-                                                        new FireBaseConnect().setBdUser("no","no",email,password,false,email.substring(0,email.indexOf("@")),lin);
+                                                        new FireBaseConnect().setBdUser("no",email,password,false,email.substring(0,email.indexOf("@")),lin);
                                                         Intent in = new Intent(StartActivity.this,MainActivity.class);
                                                         startActivity(in);
                                                         finish();

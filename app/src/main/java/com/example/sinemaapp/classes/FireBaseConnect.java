@@ -37,8 +37,8 @@ public class FireBaseConnect {
     public FireBaseConnect (int maxResult){
         this.maxResultNow = maxResult;
     }
-    public void setBdUser (String avatar_icon,String img_back, String email, String password, boolean premium, String user_name,final View view){
-        User user = new User(avatar_icon,email,password,premium,user_name,img_back);
+    public void setBdUser (String avatar_icon, String email, String password, boolean premium, String user_name,final View view){
+        User user = new User(avatar_icon,email,password,premium,user_name);
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child("items");
         final DatabaseReference databaseReferenceCount = FirebaseDatabase.getInstance().getReference().child("users").child("total_count");
         databaseReference.addChildEventListener(new ChildEventListener() {

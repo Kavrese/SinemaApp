@@ -19,6 +19,7 @@ import com.example.sinemaapp.R;
 import com.example.sinemaapp.fragments.Profile_fragment;
 import com.example.sinemaapp.model.Avatars;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class AvatarsAdapter extends RecyclerView.Adapter<AvatarsAdapter.AvatarsViewHolder> {
@@ -43,7 +44,7 @@ public class AvatarsAdapter extends RecyclerView.Adapter<AvatarsAdapter.AvatarsV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final AvatarsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final AvatarsViewHolder holder, final int position) {
         final ImageView avatar = fragment.getView().findViewById(R.id.avatar);
         final ImageView avatar_back = fragment.getView().findViewById(R.id.img_back);
         final Bitmap bitmap = BitmapFactory.decodeFile(list.get(position).getUri());
@@ -63,6 +64,7 @@ public class AvatarsAdapter extends RecyclerView.Adapter<AvatarsAdapter.AvatarsV
                             case R.id.load:
                                 avatar.setImageBitmap(bitmap);
                                 avatar_back.setImageBitmap(bitmap);
+                                fragment.saveBdImg(bitmap,new File(list.get(position).getUri()));
                                 break;
                             case R.id.add_new:
                                 fragment.startChooseAvatar(true);

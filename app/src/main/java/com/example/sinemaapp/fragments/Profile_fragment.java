@@ -147,7 +147,7 @@ public class Profile_fragment extends Fragment{
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Snackbar.make(exit,error.getMessage(),BaseTransientBottomBar.LENGTH_LONG).show();
             }
         });
         databaseReference.child("date_created").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -158,7 +158,7 @@ public class Profile_fragment extends Fragment{
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Snackbar.make(exit,error.getMessage(),BaseTransientBottomBar.LENGTH_LONG).show();
             }
         });
 
@@ -255,7 +255,7 @@ public class Profile_fragment extends Fragment{
             }
         }
 
-    private void saveBdImg(Bitmap bitmap,File file) {
+    public void saveBdImg(Bitmap bitmap,File file) {
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         DatabaseReference ava = FirebaseDatabase.getInstance().getReference().child("users").child("items").child(email.substring(0,email.indexOf("@")));
         ava.child("avatar_icon").setValue(file.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {

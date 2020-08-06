@@ -2,6 +2,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/set_new"
         android:title="Установить новую"/>
-    <item android:id="@+id/edit_old"
-        android:title="Редактировать"/>
 </menu>

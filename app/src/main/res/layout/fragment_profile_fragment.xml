@@ -47,17 +47,19 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:weightSum="100"
                 app:layout_anchor="@+id/shape_lin"
                 app:layout_anchorGravity="bottom">
 
                 <com.github.florent37.shapeofview.shapes.CircleView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="0dp"
+                    android:layout_height="98dp"
+                    android:layout_weight="30"
                     android:elevation="4dp"
                     app:shape_circle_borderColor="@android:color/white"
                     app:shape_circle_borderWidth="1.5dp">
@@ -66,19 +68,22 @@
                         android:id="@+id/avatar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:srcCompat="@color/dark"
-                        ></ImageView>
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@color/dark"></ImageView>
 
                 </com.github.florent37.shapeofview.shapes.CircleView>
 
                 <TextView
                     android:id="@+id/date_created"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="70"
                     android:text="Дата регестрации: "
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    app:autoSizeTextType="none" />
 
             </LinearLayout>
 
@@ -94,13 +99,16 @@
             android:layout_marginBottom="5dp"
             android:orientation="vertical">
 
-            <TextView
+            <EditText
                 android:id="@+id/name_user"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="5dp"
+                android:background="@color/dark"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName"
                 android:text="Name user"
                 android:textColor="@color/white"
                 android:textSize="22sp"
@@ -109,7 +117,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/avatar_rec"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" >
+                android:layout_height="100dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -169,7 +179,7 @@
                 android:id="@+id/app_lin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="14dp"
                 android:orientation="vertical">
 
                 <TextView

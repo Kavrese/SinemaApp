@@ -26,6 +26,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class StartActivity extends AppCompatActivity {
 TextView reg;
 Button enter,email_good;
@@ -137,7 +140,7 @@ private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE
                                                     ver_good = FirebaseAuth.getInstance().getCurrentUser().isEmailVerified();
                                                     if(ver_good) {
                                                         Snackbar.make(reg, "Адрес потверждён", BaseTransientBottomBar.LENGTH_SHORT).show();
-                                                        new FireBaseConnect().setBdUser("no",email,password,false,email.substring(0,email.indexOf("@")),lin);
+                                                        new FireBaseConnect().setBdUser("no",email,password,false,email.substring(0,email.indexOf("@")),new SimpleDateFormat("dd.MM.yyyy").format(new Date()),lin);
                                                         Intent in = new Intent(StartActivity.this,MainActivity.class);
                                                         startActivity(in);
                                                         finish();
